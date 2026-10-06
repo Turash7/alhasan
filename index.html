@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Al Hasan Engineering Works: Website & Boiler ERP Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=Hind+Siliguri:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B1725; --navy-2:#13243A; --navy-3:#1C3350;
+  --orange:#F58220; --orange-ink:#B5560A;
+  --steel:#4A6A8A; --steel-lt:#E4EBF2;
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#0B1725; --muted:#556375; --line:#DCE3EA;
+  --ok:#1D7348; --ok-bg:#E3F3EA; --warn:#94590A; --warn-bg:#FCF0DC; --bad:#A8261B; --bad-bg:#FBE6E3;
+  --display:'Barlow Condensed','Arial Narrow',Arial,sans-serif;
+  --body:'Barlow','Segoe UI',Roboto,Arial,sans-serif;
+  --bn:'Hind Siliguri','Noto Sans Bengali','Vrinda',sans-serif;
+  --bar:48px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#08111B; --surface:#0F1C2B; --ink:#E6ECF2; --muted:#9AA9BA; --line:#22354B;
+    --steel-lt:#172A3F; --orange-ink:#FF9D4A;
+    --ok:#6FD39E; --ok-bg:#12301F; --warn:#F2B866; --warn-bg:#33240D; --bad:#FF8A7D; --bad-bg:#3A1612;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#08111B; --surface:#0F1C2B; --ink:#E6ECF2; --muted:#9AA9BA; --line:#22354B;
+  --steel-lt:#172A3F; --orange-ink:#FF9D4A;
+  --ok:#6FD39E; --ok-bg:#12301F; --warn:#F2B866; --warn-bg:#33240D; --bad:#FF8A7D; --bad-bg:#3A1612;
+  color-scheme:dark;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 120px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+a{color:var(--orange-ink)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+.bn{font-family:var(--bn)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--display);line-height:1.05;margin:0;letter-spacing:.005em}
+
+/* ---------- demo switcher ---------- */
+.demo{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;height:var(--bar);background:#050C15;color:#C9D5E2;display:flex;align-items:center;gap:14px;padding:0 14px;font-size:14px;border-bottom:1px solid #1A2B40}
+.demo b{color:#fff;font-weight:600}
+.demo .grow{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.seg{display:flex;background:#13233A;border-radius:8px;padding:3px}
+.seg button{border:0;background:transparent;color:#C9D5E2;padding:6px 14px;border-radius:6px;cursor:pointer;font-weight:600;font-size:14px;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--orange);color:var(--navy)}
+@media (max-width:640px){.demo .grow span{display:none}}
+
+/* ---------- WEBSITE ---------- */
+.topinfo{background:var(--navy);color:#B9C7D6;font-size:14px}
+.topinfo .wrap{display:flex;gap:22px;align-items:center;min-height:40px;flex-wrap:wrap}
+.topinfo a{color:#fff;text-decoration:none}
+.topinfo details summary{cursor:pointer;color:#fff;list-style:none}
+.topinfo details summary::-webkit-details-marker{display:none}
+.topinfo details summary::after{content:" ▾";color:var(--orange)}
+.topinfo .locs{display:flex;gap:22px}
+.topinfo .loc b{color:#fff;font-weight:600}
+.topinfo .contact{margin-left:auto;display:flex;gap:18px}
+@media (max-width:900px){.topinfo .locs{flex-direction:column;gap:4px;padding:6px 0 10px}.topinfo .contact{margin-left:0}}
+
+.nav{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--bar));z-index:50;background:var(--surface);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:68px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.mark{width:42px;height:42px;border-radius:8px;background:var(--navy);color:var(--orange);display:grid;place-items:center;font:700 22px/1 var(--display);border:2px solid var(--orange)}
+.brand strong{font:700 21px/1 var(--display);display:block}
+.brand small{font-size:12.5px;color:var(--muted)}
+.menu{display:flex;gap:22px;margin-left:auto}
+.menu a{color:var(--ink);text-decoration:none;font-weight:500;font-size:15.5px}
+.menu a:hover{color:var(--orange-ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:6px;padding:11px 18px;font-weight:600;text-decoration:none;cursor:pointer;font-size:15.5px;line-height:1.2}
+.btn.primary{background:var(--orange);color:var(--navy)}
+.btn.primary:hover{background:#FF962F}
+.btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 1.5px currentColor}
+.btn.dark{background:var(--navy);color:#fff}
+.btn.sm{padding:7px 12px;font-size:14px}
+@media (max-width:960px){.menu{display:none}.nav .btn{margin-left:auto}}
+@media (max-width:640px){
+  .topinfo .contact a{white-space:nowrap}
+  .topinfo .contact a[href^="mailto"],.topinfo .contact a+a{display:none}
+  .topinfo .wrap{gap:12px;flex-wrap:nowrap;justify-content:space-between}
+  .topinfo details[open]{flex:1 1 100%}
+  .topinfo .wrap:has(details[open]){flex-wrap:wrap}
+  .brand small{display:none}.brand strong{font-size:18px}
+  .nav .wrap{gap:12px;height:60px}.nav .btn{padding:9px 12px;font-size:14.5px;white-space:nowrap}
+  .mark{width:36px;height:36px;font-size:18px}
+}
+
+.hero{background:var(--navy);color:#fff;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,transparent 0 46px,rgba(255,255,255,.035) 46px 47px);pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;padding-top:72px;padding-bottom:80px}
+.hero h1{font-size:clamp(38px,5.6vw,68px);font-weight:700;max-width:16ch}
+.hero p.lead{font-size:18.5px;color:#C4D1DE;max-width:56ch;margin:22px 0 30px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.hero .ctas .btn.ghost{color:#fff}
+.hero ul.facts{list-style:none;padding:0;margin:34px 0 0;display:flex;gap:28px;flex-wrap:wrap;color:#AFC0D2;font-size:14.5px}
+.hero ul.facts li{border-left:3px solid var(--orange);padding-left:10px}
+.hero ul.facts b{color:#fff;display:block;font:600 19px/1.2 var(--display)}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr;gap:40px;padding-top:48px;padding-bottom:56px}}
+
+/* nameplate: the one bold element */
+.plate{position:relative;border-radius:10px;padding:30px 30px 26px;color:#14202E;
+  background:
+    radial-gradient(circle at 14px 14px,#8E9BA8 0 4px,#5E6B78 5px,transparent 6px),
+    radial-gradient(circle at calc(100% - 14px) 14px,#8E9BA8 0 4px,#5E6B78 5px,transparent 6px),
+    radial-gradient(circle at 14px calc(100% - 14px),#8E9BA8 0 4px,#5E6B78 5px,transparent 6px),
+    radial-gradient(circle at calc(100% - 14px) calc(100% - 14px),#8E9BA8 0 4px,#5E6B78 5px,transparent 6px),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.18) 0 1px,rgba(0,0,0,.025) 1px 3px),
+    linear-gradient(160deg,#E9EEF2 0%,#C5CFD8 45%,#DDE4EA 70%,#B7C2CC 100%);
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 -2px 0 rgba(0,0,0,.15) inset,0 24px 50px rgba(0,0,0,.45);
+  transform:rotate(-1.2deg)}
+.plate .issuer{font-size:13.5px;font-weight:600;color:#3B4A5A;border-bottom:1.5px solid #8C99A6;padding-bottom:10px}
+.plate .row{display:flex;align-items:flex-end;gap:18px;margin:16px 0 12px}
+.plate .serial{font:700 92px/0.8 var(--display);color:var(--navy);text-shadow:0 1px 0 rgba(255,255,255,.7)}
+.plate .serial-l{font:600 14px/1.3 var(--body);color:#3B4A5A}
+.plate .serial-l b{display:block;font:700 22px/1.1 var(--display);color:var(--navy)}
+.plate .name{font:700 22px/1.15 var(--display);color:var(--navy)}
+.plate .addr{font-size:14px;color:#33414F;margin-top:4px}
+.plate .bnline{font-family:var(--bn);font-size:14.5px;color:#22303E;margin-top:12px;border-top:1.5px solid #8C99A6;padding-top:10px}
+.plate a.verify{display:inline-block;margin-top:14px;background:var(--navy);color:#fff;text-decoration:none;padding:9px 14px;border-radius:6px;font-weight:600;font-size:14.5px}
+.plate-note{color:#8FA2B6;font-size:13px;margin-top:22px;max-width:44ch}
+@media (prefers-reduced-motion:no-preference){
+  .plate{animation:settle .9s cubic-bezier(.2,.9,.3,1.2) both .15s}
+  @keyframes settle{from{opacity:0;transform:translateY(26px) rotate(3deg)}to{opacity:1;transform:rotate(-1.2deg)}}
+}
+
+section.blk{padding:84px 0}
+.blk h2{font-size:clamp(32px,3.6vw,44px);font-weight:700;max-width:22ch}
+.blk .intro{color:var(--muted);max-width:62ch;margin:14px 0 40px;font-size:17px}
+
+.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:0 40px}
+.svc .grp h3{font-size:24px;font-weight:600;padding-bottom:12px;border-bottom:3px solid var(--navy);margin-bottom:6px}
+.svc ul{list-style:none;margin:0;padding:0}
+.svc li{border-bottom:1px solid var(--line);padding:14px 0}
+.svc li a{color:var(--ink);text-decoration:none;font-weight:600;font-size:17px}
+.svc li a:hover{color:var(--orange-ink)}
+.svc li span{display:block;color:var(--muted);font-size:14.5px;margin-top:2px}
+.svc li.hot a::after{content:"Priority service";margin-left:8px;font:600 11.5px/1 var(--body);background:var(--orange);color:var(--navy);padding:3px 7px;border-radius:4px;vertical-align:2px}
+@media (max-width:900px){.svc{grid-template-columns:1fr;gap:36px}}
+
+.dosing{background:var(--steel-lt)}
+.cycle{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(7,1fr);gap:0;counter-reset:s}
+.cycle li{position:relative;padding:58px 12px 0 0}
+.cycle li::before{counter-increment:s;content:counter(s);position:absolute;top:0;left:0;width:40px;height:40px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font:700 19px/1 var(--display);z-index:1}
+.cycle li:nth-child(1)::before,.cycle li:nth-child(4)::before,.cycle li:nth-child(7)::before{background:var(--orange);color:var(--navy)}
+.cycle li::after{content:"";position:absolute;top:19px;left:40px;right:0;height:2px;background:var(--steel)}
+.cycle li:last-child::after{display:none}
+.cycle b{display:block;font:600 19px/1.15 var(--display)}
+.cycle span{font-size:14px;color:var(--muted)}
+@media (max-width:900px){.cycle{grid-template-columns:1fr}.cycle li{padding:0 0 22px 58px;min-height:62px}.cycle li::after{top:40px;left:19px;width:2px;height:auto;bottom:0;right:auto}}
+.callout{margin-top:44px;display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap;border-left:4px solid var(--orange);background:var(--surface);padding:22px 24px;border-radius:0 8px 8px 0}
+.callout p{margin:0;max-width:64ch}
+
+.group{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.co{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:26px}
+.co.lead{background:var(--navy);color:#fff;border-color:var(--navy)}
+.co .tag{font-size:13px;color:var(--muted);font-weight:500}
+.co.lead .tag{color:#9FB3C8}
+.co h3{font-size:27px;margin:8px 0 10px}
+.co p{margin:0 0 14px;font-size:15.5px}
+.co ul{margin:0;padding-left:18px;font-size:15px;color:var(--muted)}
+.co.lead ul{color:#C4D1DE}
+@media (max-width:900px){.group{grid-template-columns:1fr}}
+
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,1fr);border-top:3px solid var(--navy)}
+.steps li{padding:18px 16px 0 0}
+.steps em{font:700 30px/1 var(--display);color:var(--orange-ink);font-style:normal}
+.steps b{display:block;font-size:17px;margin:6px 0 4px}
+.steps span{font-size:14.5px;color:var(--muted)}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr;gap:10px}}
+
+.prods{display:flex;flex-wrap:wrap;gap:10px}
+.prods span{border:1px solid var(--line);background:var(--surface);padding:9px 14px;border-radius:6px;font-weight:500;font-size:15px}
+
+.quote{background:var(--navy);color:#fff}
+.quote .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px}
+.quote .intro{color:#B9C7D6}
+.quote ul.why{padding-left:18px;color:#C4D1DE}
+form.qf{background:var(--surface);color:var(--ink);border-radius:10px;padding:28px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.f{display:flex;flex-direction:column;gap:5px;font-size:14.5px;font-weight:600}
+.f.full{grid-column:1/-1}
+.f input,.f select,.f textarea{font-weight:400;border:1.5px solid var(--line);background:var(--bg);border-radius:6px;padding:10px 12px;font-size:15.5px;width:100%}
+.f textarea{min-height:90px;resize:vertical}
+.f .err{color:var(--bad);font-weight:500;font-size:13px;min-height:0}
+.chk{grid-column:1/-1;display:flex;gap:10px;font-size:14px;align-items:flex-start}
+.chk input{margin-top:4px}
+.qok{grid-column:1/-1;background:var(--ok-bg);color:var(--ok);padding:14px 16px;border-radius:8px;font-weight:500}
+@media (max-width:900px){.quote .wrap{grid-template-columns:1fr}form.qf{grid-template-columns:1fr}}
+
+.locs3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.loccard{border-top:3px solid var(--orange);background:var(--surface);padding:22px;border-radius:0 0 10px 10px;border-left:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.loccard h3{font-size:24px}
+.loccard p{color:var(--muted);margin:8px 0 16px;font-size:15px}
+.loccard .acts{display:flex;gap:8px;flex-wrap:wrap}
+@media (max-width:900px){.locs3{grid-template-columns:1fr}}
+
+footer.site{background:#050C15;color:#93A5B8;padding:48px 0 110px;font-size:14.5px}
+footer.site .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
+footer.site h4{color:#fff;font:600 18px/1.2 var(--display);margin:0 0 10px}
+footer.site a{color:#C9D5E2;text-decoration:none;display:block;padding:2px 0}
+@media (max-width:800px){footer.site .wrap{grid-template-columns:1fr}}
+
+.mbar{display:none}
+@media (max-width:760px){
+  .mbar{display:grid;grid-template-columns:1fr 1fr 1.2fr;position:fixed;left:0;right:0;bottom:0;z-index:55;background:var(--surface);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));gap:8px}
+  .mbar .btn{padding:11px 6px;font-size:15px}
+}
+
+/* ---------- ERP ---------- */
+#erp{display:grid;grid-template-columns:236px 1fr;min-height:calc(100vh - var(--bar))}
+.side{background:var(--navy);color:#C4D1DE;padding:18px 12px;position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--bar));height:calc(100vh - var(--bar) - env(safe-area-inset-top,0px));overflow:auto}
+.side .app{display:flex;gap:10px;align-items:center;padding:4px 8px 18px;border-bottom:1px solid #1E3450;margin-bottom:12px}
+.side .app strong{color:#fff;font:700 19px/1.05 var(--display);display:block}
+.side .app small{font-size:12px;color:#8FA2B6}
+.side nav button{display:flex;width:100%;align-items:center;justify-content:space-between;gap:8px;background:none;border:0;color:#C4D1DE;text-align:left;padding:9px 10px;border-radius:6px;cursor:pointer;font-size:15px;font-weight:500}
+.side nav button:hover{background:#13243A;color:#fff}
+.side nav button[aria-current="page"]{background:var(--orange);color:var(--navy);font-weight:600}
+.pill{white-space:nowrap;font-size:11.5px;font-weight:600;padding:2px 7px;border-radius:10px;background:#22395A;color:#C9D8E8}
+.side nav button[aria-current="page"] .pill{background:var(--navy);color:#fff}
+.pill.new{background:var(--orange);color:var(--navy)}
+.side .rolebox{margin-top:18px;padding:12px 8px 0;border-top:1px solid #1E3450;font-size:13px}
+.side select{width:100%;margin-top:6px;background:#13243A;color:#fff;border:1px solid #2A4363;border-radius:6px;padding:8px}
+.main{padding:24px 28px 60px;min-width:0}
+.mhead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.mhead h1{font-size:34px}
+.mhead p{margin:4px 0 0;color:var(--muted);font-size:14.5px}
+.sample{font-size:13px;background:var(--warn-bg);color:var(--warn);padding:5px 10px;border-radius:6px;font-weight:500}
+@media (max-width:860px){
+  #erp{grid-template-columns:1fr}
+  .side{position:static;height:auto;padding:10px}
+  .side .app{border:0;padding-bottom:8px;margin-bottom:4px}
+  .side nav{display:flex;overflow-x:auto;gap:4px;padding-bottom:4px}
+  .side nav button{white-space:nowrap;width:auto}
+  .side .rolebox{margin-top:8px;padding-top:8px}
+  .main{padding:18px 14px 60px}
+}
+
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+.kpi span{font-size:13.5px;color:var(--muted)}
+.kpi b{display:block;font:700 30px/1.1 var(--display);margin-top:4px}
+.kpi.alert b{color:var(--bad)}
+@media (max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:560px){.kpis{grid-template-columns:1fr 1fr}}
+.grid2{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
+.grid2 > *{min-width:0}
+@media (max-width:1000px){.grid2{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px;margin-bottom:16px}
+.panel h2{font-size:22px;font-weight:600;margin-bottom:12px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.panel h2 small{font:500 13.5px var(--body);color:var(--muted)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th{text-align:left;font-weight:600;color:var(--muted);font-size:13px;padding:8px 10px;border-bottom:1.5px solid var(--line);white-space:nowrap}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr.click{cursor:pointer}
+tr.click:hover td{background:var(--steel-lt)}
+tr.sel td{background:var(--steel-lt)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.chip{display:inline-block;font-size:12.5px;font-weight:600;padding:3px 8px;border-radius:5px;white-space:nowrap}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}
+.chip.warn{background:var(--warn-bg);color:var(--warn)}
+.chip.bad{background:var(--bad-bg);color:var(--bad)}
+.chip.info{background:var(--steel-lt);color:var(--ink)}
+.chip.src{background:transparent;box-shadow:inset 0 0 0 1px var(--line);color:var(--muted)}
+.list{list-style:none;margin:0;padding:0}
+.list li{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.list li:last-child{border:0}
+.list .t{flex:1;min-width:0}
+.list .t b{display:block;font-weight:600}
+.list .t span{color:var(--muted);font-size:14px}
+.time{font:600 17px/1.2 var(--display);width:56px;flex:none;color:var(--orange-ink)}
+.bars{display:flex;align-items:flex-end;gap:14px;height:180px;padding-top:10px}
+.bars .m{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+.bars .pair{display:flex;gap:4px;align-items:flex-end;height:100%;width:100%;justify-content:center}
+.bars i{display:block;width:40%;max-width:22px;border-radius:3px 3px 0 0}
+.bars i.s{background:var(--navy-3)}
+.bars i.e{background:var(--orange)}
+.bars small{font-size:12.5px;color:var(--muted)}
+.legend{display:flex;gap:16px;font-size:13px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .bars i.s{background:#5D86B0}}
+.hbar{display:grid;grid-template-columns:110px 1fr 36px;gap:10px;align-items:center;font-size:14px;margin:7px 0}
+.hbar div{height:10px;background:var(--steel-lt);border-radius:5px;overflow:hidden}
+.hbar div i{display:block;height:100%;background:var(--orange)}
+.hbar b{text-align:right;font-variant-numeric:tabular-nums}
+
+.board{display:grid;grid-template-columns:repeat(6,minmax(200px,1fr));gap:12px;overflow-x:auto;padding-bottom:8px}
+.col{background:var(--steel-lt);border-radius:8px;padding:10px;min-height:200px}
+.col h3{font:600 16px/1.2 var(--body);display:flex;justify-content:space-between;margin:2px 4px 10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px;margin-bottom:8px;font-size:14px}
+.card.fresh{border-color:var(--orange);box-shadow:0 0 0 2px rgba(245,130,32,.25)}
+.card b{display:block;font-size:14.5px}
+.card .meta{color:var(--muted);margin:3px 0 8px}
+.card .foot{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap}
+.link{background:none;border:0;color:var(--orange-ink);font-weight:600;cursor:pointer;padding:0;font-size:13.5px}
+
+.dots{display:flex;gap:5px;align-items:center;font-size:11.5px;color:var(--muted)}
+.dots i{display:inline-grid;place-items:center;min-width:24px;height:20px;border-radius:4px;background:var(--steel-lt);font-style:normal;font-weight:600}
+.dots i.on{background:var(--navy-3);color:#fff}
+.rem{display:grid;grid-template-columns:90px 1fr auto;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.rem .d{font:700 26px/1 var(--display);text-align:center}
+.rem .d small{display:block;font:500 12px var(--body);color:var(--muted)}
+.rem .acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:640px){.rem{grid-template-columns:64px 1fr}.rem .acts{grid-column:1/-1;justify-content:flex-start}}
+
+.qb{display:grid;grid-template-columns:1fr 300px;gap:16px}
+@media (max-width:1000px){.qb{grid-template-columns:1fr}}
+.qb .rowf{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px}
+.qb label{font-size:13.5px;font-weight:600;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+.qb select,.qb input{border:1.5px solid var(--line);background:var(--bg);border-radius:6px;padding:8px 10px;font-size:14.5px}
+.qb td input{width:90px;text-align:right}
+.qb td input.qty{width:64px}
+.tot{font-size:15px}
+.tot div{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--line)}
+.tot div.g{font:700 24px/1.2 var(--display);border:0;padding-top:12px}
+.tot input{width:70px;text-align:right;border:1.5px solid var(--line);background:var(--bg);border-radius:5px;padding:4px 6px}
+.x{background:none;border:0;color:var(--bad);cursor:pointer;font-size:18px;line-height:1}
+
+.doc{background:#fff;color:#0B1725;border-radius:6px;padding:32px;font-size:14px}
+.doc .dh{display:flex;justify-content:space-between;gap:20px;border-bottom:3px solid #0B1725;padding-bottom:14px;margin-bottom:16px;flex-wrap:wrap}
+.doc h2{font:700 26px/1.05 var(--display)}
+.doc table th{color:#556375;border-color:#DCE3EA}
+.doc table td{border-color:#DCE3EA}
+.doc .sig{display:flex;justify-content:space-between;margin-top:40px;gap:20px}
+.doc .sig div{border-top:1px solid #0B1725;padding-top:6px;min-width:170px;font-size:13px}
+.ph{background:repeating-linear-gradient(45deg,#E4EBF2 0 10px,#EEF2F6 10px 20px);border-radius:6px;display:grid;place-items:center;height:120px;color:#556375;font-size:13px;text-align:center;padding:8px}
+
+.modal{position:fixed;inset:0;background:rgba(5,12,21,.6);z-index:80;display:grid;place-items:center;padding:20px}
+.modal[hidden]{display:none}
+.modal .box{background:var(--surface);border-radius:10px;max-width:820px;width:100%;max-height:calc(100vh - 40px);overflow:auto;padding:18px}
+.modal .bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px}
+
+.phase{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.phase .panel h2{font-size:21px}
+.phase ul{padding-left:18px;margin:0;font-size:14.5px}
+@media (max-width:900px){.phase{grid-template-columns:1fr}}
+
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 18px;border-radius:8px;z-index:90;font-size:15px;box-shadow:0 10px 30px rgba(0,0,0,.3);max-width:calc(100% - 32px);border-left:4px solid var(--orange)}
+.toast[hidden]{display:none}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="demo" role="banner">
+  <div class="grow"><b>Proposal demo</b> <span>for M/S Al Hasan Engineering Works, prepared by Md. Asifur Rahman</span></div>
+  <div class="seg" role="group" aria-label="Choose demo">
+    <button type="button" data-tab="site" aria-pressed="true">Website</button>
+    <button type="button" data-tab="erp" aria-pressed="false">Boiler ERP</button>
+  </div>
+</div>
+
+<!-- ======================= WEBSITE ======================= -->
+<div id="site">
+  <div class="topinfo">
+    <div class="wrap">
+      <details id="locdetails">
+        <summary>Office &amp; workshop locations</summary>
+        <div class="locs">
+          <div class="loc"><b>Halishahar office:</b> Islam Monjil, 2196 PC Road</div>
+          <div class="loc"><b>MEZ office:</b> Chowdhury Complex, Mirsarai</div>
+          <div class="loc"><b>Workshop:</b> Champa Market, Pahartali</div>
+        </div>
+      </details>
+      <div class="contact">
+        <a href="tel:+8801735484726">01735-484726</a>
+        <a href="tel:+8801744256534">01744-256534</a>
+        <a href="mailto:info@alhasanengr.com">info@alhasanengr.com</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="#top" aria-label="Al Hasan Engineering Works home">
+        <span class="mark" aria-hidden="true">AH</span>
+        <span><strong>Al Hasan Engineering Works</strong><small>Boiler, water treatment &amp; industrial engineering</small></span>
+      </a>
+      <nav class="menu" aria-label="Main">
+        <a href="#services">Services</a>
+        <a href="#dosing">Dosing programme</a>
+        <a href="#group">Our group</a>
+        <a href="#products">Products</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="btn primary" href="#quote">Request a quote</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <div>
+          <h1>Complete boiler, water treatment &amp; industrial engineering solutions</h1>
+          <p class="lead">Boiler service, installation, descaling, inspection support, RO treatment, cooling tower chemicals and industrial spare parts for factories across Bangladesh, run from Chattogram.</p>
+          <div class="ctas">
+            <a class="btn primary" href="#quote">Request a quote</a>
+            <a class="btn ghost" href="tel:+8801735484726">Call 01735-484726</a>
+            <a class="btn ghost" href="https://wa.me/8801735484726" target="_blank" rel="noopener">WhatsApp us</a>
+          </div>
+          <ul class="facts">
+            <li><b>3 locations</b>Halishahar, MEZ and Pahartali</li>
+            <li><b>24/7 breakdown line</b>For boiler emergencies</li>
+            <li><b>Test-based chemistry</b>No guesswork dosing</li>
+          </ul>
+        </div>
+        <div>
+          <div class="plate" role="img" aria-label="Official listing: M/S Al Hasan Engineering Works is listed as Boiler Repairing Institution serial number 43 by the Office of the Chief Inspector of Boilers, Bangladesh">
+            <div class="issuer">Office of the Chief Inspector of Boilers, Bangladesh</div>
+            <div class="row">
+              <div class="serial">43</div>
+              <div class="serial-l">Officially listed<b>Boiler Repairing Institution</b></div>
+            </div>
+            <div class="name">M/S Al Hasan Engineering Works</div>
+            <div class="addr">Islam Monjil, 2196 P. C. Road, Halishahar, Chattogram</div>
+            <div class="bnline">প্রধান বয়লার পরিদর্শকের কার্যালয়ের তালিকাভুক্ত বয়লার মেরামতকারী প্রতিষ্ঠান, ক্রমিক নং ৪৩</div>
+            <a class="verify" href="https://boiler.gov.bd/pages/static-pages/6968a28b8a8d58b2bd2b5578" target="_blank" rel="noopener">Verify official listing</a>
+          </div>
+          <p class="plate-note">Wording follows the approved brief: a public listing, shown with a link to the source, never presented as a government endorsement.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="blk" id="services">
+      <div class="wrap">
+        <h2>Ten services, one accountable team</h2>
+        <p class="intro">Each service gets its own page with scope, process, safety approach, deliverables and FAQ, so factory engineers find exact answers and every page can rank on its own.</p>
+        <div class="svc">
+          <div class="grp"><h3>Boiler</h3><ul>
+            <li><a href="#quote">Boiler service</a><span>Condition checks, performance observation, recommendations</span></li>
+            <li><a href="#quote">Installation &amp; commissioning</a><span>Site planning, piping, testing, handover documents</span></li>
+            <li><a href="#quote">Maintenance &amp; troubleshooting</a><span>Preventive schedules and breakdown response</span></li>
+            <li><a href="#quote">Boiler descaling</a><span>Chemical and mechanical, with before/after report</span></li>
+            <li><a href="#quote">Inspection support</a><span>Document checklist, test readiness, renewal tracking</span></li>
+          </ul></div>
+          <div class="grp"><h3>Water &amp; cooling</h3><ul>
+            <li class="hot"><a href="#dosing">Regular dosing chemical</a><span>Test-based programme with monthly reports</span></li>
+            <li><a href="#quote">RO treatment service</a><span>Membranes, filters, recovery and rejection review</span></li>
+            <li><a href="#quote">Industrial water treatment</a><span>Softener, resin, dosing review, test records</span></li>
+            <li><a href="#quote">Cooling tower chemicals</a><span>Scale, corrosion and biological growth control</span></li>
+          </ul></div>
+          <div class="grp"><h3>Industrial</h3><ul>
+            <li><a href="#quote">Industrial engineering service</a><span>Plant erection, piping, mechanical support</span></li>
+            <li><a href="#products">Spare parts supply</a><span>Valves, gauges, pumps, burner parts by specification</span></li>
+          </ul></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="blk dosing" id="dosing">
+      <div class="wrap">
+        <h2>Boiler regular dosing, run as a managed programme</h2>
+        <p class="intro">The right dose depends on your boiler pressure, make-up water, condensate return and blowdown practice, so we start with a test, not a price list. Every visit ends in a signed service report.</p>
+        <ol class="cycle">
+          <li><b>Survey</b><span>Boiler, feedwater and dosing setup</span></li>
+          <li><b>Sample</b><span>From approved sample points</span></li>
+          <li><b>Analyse</b><span>Hardness, pH, TDS, alkalinity</span></li>
+          <li><b>Dose</b><span>Calibrated pump or batch feed</span></li>
+          <li><b>Monitor</b><span>Residuals at the agreed frequency</span></li>
+          <li><b>Report</b><span>Results, consumption, actions</span></li>
+          <li><b>Adjust</b><span>Only after documented review</span></li>
+        </ol>
+        <div class="callout">
+          <p><strong>Have a recent water test or a nameplate photo?</strong> Send it with your request and our engineer will prepare a dosing plan for your boiler.</p>
+          <a class="btn primary" href="#quote" data-svc="Boiler regular dosing chemical">Request boiler water test &amp; dosing plan</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="blk" id="group">
+      <div class="wrap">
+        <h2>One group, every utility your plant runs on</h2>
+        <p class="intro">Hoque Engineering and our LPG and water treatment teams work as sister concerns of Al Hasan Engineering Works: one contact for steam, water, power, fire safety and gas.</p>
+        <div class="group">
+          <div class="co lead">
+            <div class="tag">Parent company</div>
+            <h3>Al Hasan Engineering Works</h3>
+            <p>Boilers, descaling, dosing chemicals, RO and cooling tower support.</p>
+            <ul><li>Boiler service &amp; parts</li><li>Water treatment chemicals</li><li>Inspection support</li></ul>
+          </div>
+          <div class="co">
+            <div class="tag">A sister concern of Al Hasan Engineering Works</div>
+            <h3>Hoque Engineering</h3>
+            <p>Electrical substations, fire detection and hydrants, generators, ducting, insulation and pipe fabrication.</p>
+            <ul><li>HV/MV/LV substations</li><li>Fire safety to NFPA &amp; BNBC</li><li>Generator supply &amp; service</li></ul>
+          </div>
+          <div class="co">
+            <div class="tag">A sister concern of Al Hasan Engineering Works</div>
+            <h3>Water treatment &amp; LPG solutions</h3>
+            <p>RO, DM, softener, ETP/STP plants, and Smart LPG installation &amp; service for kitchens, boilers and process heat.</p>
+            <ul><li>WTP / ETP / STP</li><li>LPG manifold &amp; piping</li><li>Leak testing &amp; AMC</li></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="blk" style="padding-top:0">
+      <div class="wrap">
+        <h2>How a job runs</h2>
+        <p class="intro">The same six steps for a single safety valve or a full boiler house, tracked inside our own service system.</p>
+        <ol class="steps">
+          <li><em>1</em><b>Inquiry</b><span>Call, WhatsApp or form</span></li>
+          <li><em>2</em><b>Site visit</b><span>Engineer sees the plant</span></li>
+          <li><em>3</em><b>Assessment</b><span>Tests and findings</span></li>
+          <li><em>4</em><b>Quotation</b><span>Itemised, with terms</span></li>
+          <li><em>5</em><b>Execution</b><span>Safe work, photo log</span></li>
+          <li><em>6</em><b>Support</b><span>Reports and reminders</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="blk" id="products" style="padding-top:0">
+      <div class="wrap">
+        <h2>Products &amp; spare parts</h2>
+        <p class="intro">Prices depend on brand, size and quantity, so every item has a "Request price" button instead of a checkout.</p>
+        <div class="prods">
+          <span>Boiler tubes</span><span>Safety valves</span><span>Pressure &amp; level gauges</span><span>Burners &amp; burner parts</span><span>Feed &amp; dosing pumps</span><span>Steam traps</span><span>Gaskets</span><span>RO membranes</span><span>Cartridge filters</span><span>Softener resin</span><span>Boiler dosing chemicals</span><span>Descaling chemicals</span><span>Cooling tower chemicals</span><span>Instruments &amp; controls</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="blk quote" id="quote">
+      <div class="wrap">
+        <div>
+          <h2>Request a quotation</h2>
+          <p class="intro">Tell us about the boiler or system. An engineer replies on your mobile, usually the same working day.</p>
+          <ul class="why">
+            <li>Your enquiry gets a tracking ID instantly</li>
+            <li>It goes straight into our service system, not a forgotten inbox</li>
+            <li>We only ask for what we need to quote</li>
+          </ul>
+          <p style="color:#8FA2B6;font-size:14px;margin-top:24px">Demo tip: submit this form, then open the Boiler ERP tab. Your enquiry is waiting under Leads &amp; CRM.</p>
+        </div>
+        <form class="qf" id="qf" novalidate>
+          <label class="f">Full name<input name="name" autocomplete="name" required><span class="err"></span></label>
+          <label class="f">Company name<input name="company" autocomplete="organization" required><span class="err"></span></label>
+          <label class="f">Mobile number<input name="mobile" type="tel" autocomplete="tel" required placeholder="01XXX-XXXXXX"><span class="err"></span></label>
+          <label class="f">Factory location<input name="loc" required placeholder="e.g. Kalurghat, Chattogram"><span class="err"></span></label>
+          <label class="f full">Service or product
+            <select name="svc" id="svcSel" required>
+              <option value="">Choose one</option>
+              <option>Boiler regular dosing chemical</option>
+              <option>Boiler descaling</option>
+              <option>Boiler service / troubleshooting</option>
+              <option>Boiler installation &amp; commissioning</option>
+              <option>Boiler inspection support</option>
+              <option>RO / water treatment</option>
+              <option>Cooling tower chemicals</option>
+              <option>Spare parts</option>
+              <option>Substation / fire safety (Hoque Engineering)</option>
+              <option>LPG system</option>
+            </select><span class="err"></span></label>
+          <label class="f full">Requirement<textarea name="msg" required placeholder="Boiler capacity, pressure, current problem…"></textarea><span class="err"></span></label>
+          <label class="chk"><input type="checkbox" name="consent" required> <span>I agree to be contacted about this enquiry.</span></label>
+          <div style="grid-column:1/-1"><button class="btn primary" type="submit">Send enquiry</button></div>
+          <div class="qok" id="qok" hidden role="status"></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="blk" id="contact">
+      <div class="wrap">
+        <h2>Office &amp; workshop</h2>
+        <p class="intro">Visit, call or send your engineer to the workshop to see parts before you buy.</p>
+        <div class="locs3">
+          <div class="loccard"><h3>Halishahar office</h3><p>Islam Monjil, 2196, PC Road, Halishahar, Chattogram-4223</p><div class="acts"><a class="btn sm dark" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Islam+Monjil+2196+PC+Road+Halishahar+Chattogram">Open in Maps</a><a class="btn sm ghost" href="tel:+8801735484726">Call</a></div></div>
+          <div class="loccard"><h3>MEZ office</h3><p>Chowdhury Complex (1st floor), Mirsarai Economic Zone, Chattogram</p><div class="acts"><a class="btn sm dark" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Mirsarai+Economic+Zone+Chattogram">Open in Maps</a><a class="btn sm ghost" href="tel:+8801744256534">Call</a></div></div>
+          <div class="loccard"><h3>Pahartali workshop</h3><p>Champa Market (beside Hakkani Petrol Pump), CDA Market, Pahartali, Chattogram</p><div class="acts"><a class="btn sm dark" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=CDA+Market+Pahartali+Chattogram">Open in Maps</a><a class="btn sm ghost" href="tel:+8801735484726">Call</a></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      <div><h4>M/S Al Hasan Engineering Works</h4><p>Plant erection, maintenance &amp; troubleshooting. Industrial engineering products sales &amp; service.</p><p>Sister concerns: Hoque Engineering, Smart LPG Installation &amp; Service.</p></div>
+      <div><h4>Services</h4><a href="#services">Boiler service</a><a href="#dosing">Regular dosing chemical</a><a href="#services">RO &amp; water treatment</a><a href="#services">Cooling tower chemicals</a></div>
+      <div><h4>Contact</h4><a href="tel:+8801735484726">01735-484726</a><a href="tel:+8801744256534">01744-256534</a><a href="mailto:info@alhasanengr.com">info@alhasanengr.com</a><a href="https://www.facebook.com/alhasanengr2007" target="_blank" rel="noopener">facebook.com/alhasanengr2007</a></div>
+    </div>
+  </footer>
+
+  <div class="mbar" aria-label="Quick contact">
+    <a class="btn ghost" href="tel:+8801735484726">Call</a>
+    <a class="btn ghost" href="https://wa.me/8801735484726" target="_blank" rel="noopener">WhatsApp</a>
+    <a class="btn primary" href="#quote">Get quote</a>
+  </div>
+</div>
+
+<!-- ======================= ERP ======================= -->
+<div id="erp" hidden>
+  <aside class="side">
+    <div class="app"><span class="mark" aria-hidden="true" style="width:36px;height:36px;font-size:18px">AH</span><div><strong>Al Hasan Boiler ERP</strong><small>Boiler, water &amp; engineering management</small></div></div>
+    <nav id="erpNav" aria-label="ERP modules"></nav>
+    <div class="rolebox"><label>Viewing as
+      <select id="role">
+        <option value="md">Managing Director</option>
+        <option value="sales">Sales Executive</option>
+        <option value="tech">Engineer / Technician</option>
+        <option value="store">Storekeeper</option>
+        <option value="customer">Customer (portal)</option>
+      </select></label>
+    </div>
+  </aside>
+  <main class="main" id="erpMain" aria-live="polite"></main>
+</div>
+
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="box">
+    <div class="bar"><strong id="modalTitle">Quotation preview</strong><button class="btn sm ghost" type="button" data-act="closeModal">Close</button></div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden role="status"></div>
+
+<script>
+(function(){
+const today=new Date();today.setHours(0,0,0,0);
+const addDays=n=>{const d=new Date(today);d.setDate(d.getDate()+n);return d};
+const fmt=d=>d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+const tk=n=>'৳'+Math.round(n).toLocaleString('en-IN');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const daysTo=d=>Math.round((d-today)/86400000);
+
+/* ---------- sample data ---------- */
+const customers=[
+ {id:'C-101',name:'Karnaphuli Knit Composite Ltd.',area:'Kalurghat, Chattogram',contact:'Engr. Rafiq Ahmed',phone:'01711-000101',ind:'Textile'},
+ {id:'C-102',name:'Patenga Food Processing Ltd.',area:'Patenga, Chattogram',contact:'Mr. Shahadat Hossain',phone:'01811-000102',ind:'Food & beverage'},
+ {id:'C-103',name:'Mirsarai Denim Mills Ltd.',area:'BSMSN, Mirsarai',contact:'Engr. Tanvir Alam',phone:'01911-000103',ind:'Textile'},
+ {id:'C-104',name:'Bay View Hotel & Resort',area:'Agrabad, Chattogram',contact:'Mr. Imran Kabir',phone:'01611-000104',ind:'Hospitality'},
+ {id:'C-105',name:'Seaport Pharma Ltd.',area:'Sitakunda, Chattogram',contact:'Engr. Nusrat Jahan',phone:'01511-000105',ind:'Pharmaceutical'},
+ {id:'C-106',name:'Halda Paper & Board Ltd.',area:'Hathazari, Chattogram',contact:'Mr. Abdul Karim',phone:'01311-000106',ind:'Paper'}
+];
+const cust=id=>customers.find(c=>c.id===id);
+const boilers=[
+ {id:'BLR-0012',c:'C-101',type:'Fire tube steam',cap:'5 TPH',p:'10.5 bar',fuel:'Gas',reg:'CTG-B-1182',last:-358,next:7,insp:23},
+ {id:'BLR-0013',c:'C-101',type:'Fire tube steam',cap:'3 TPH',p:'10.5 bar',fuel:'Gas',reg:'CTG-B-1183',last:-300,next:65,insp:140},
+ {id:'BLR-0021',c:'C-102',type:'Fire tube steam',cap:'2 TPH',p:'8 bar',fuel:'Diesel / gas',reg:'CTG-B-2045',last:-335,next:30,insp:52},
+ {id:'BLR-0034',c:'C-103',type:'Water tube steam',cap:'10 TPH',p:'17.5 bar',fuel:'Gas',reg:'CTG-B-3310',last:-364,next:1,insp:88},
+ {id:'BLR-0040',c:'C-104',type:'Hot water',cap:'1.5 MW',p:'6 bar',fuel:'Gas',reg:'CTG-B-4021',last:-200,next:165,insp:15},
+ {id:'BLR-0051',c:'C-105',type:'Fire tube steam',cap:'4 TPH',p:'10.5 bar',fuel:'Gas',reg:'CTG-B-5107',last:-305,next:60,insp:200},
+ {id:'BLR-0063',c:'C-106',type:'Fire tube steam',cap:'6 TPH',p:'12 bar',fuel:'Coal / gas',reg:'CTG-B-6233',last:-350,next:15,insp:31}
+];
+const stages=['New lead','Contacted','Site visit','Quotation','Work order','Completed'];
+let leads=[
+ {id:'L-2610-118',co:'Chandgaon Dyeing Ltd.',who:'Mr. Faruk',src:'Facebook',need:'Boiler descaling',val:85000,st:0},
+ {id:'L-2610-117',co:'Kalurghat Steel Re-rolling',who:'Engr. Mahbub',src:'Referral',need:'Safety valve + gauges',val:42000,st:1},
+ {id:'L-2609-112',co:'Sitakunda Agro Foods',who:'Mr. Rubel',src:'Website',need:'Regular dosing programme',val:216000,st:2},
+ {id:'L-2609-109',co:'Patenga Food Processing Ltd.',who:'Mr. Shahadat',src:'Phone',need:'RO membrane replacement',val:130000,st:3},
+ {id:'L-2609-104',co:'Bay View Hotel & Resort',who:'Mr. Imran',src:'Field visit',need:'Hot water boiler service',val:58000,st:3},
+ {id:'L-2609-101',co:'Mirsarai Denim Mills Ltd.',who:'Engr. Tanvir',src:'Facebook',need:'Tube replacement (40 pcs)',val:395000,st:4},
+ {id:'L-2608-097',co:'Halda Paper & Board Ltd.',who:'Mr. Karim',src:'Google',need:'Cooling tower chemicals',val:96000,st:5},
+ {id:'L-2610-119',co:'Anwara Fish Processing',who:'Mr. Delwar',src:'LinkedIn',need:'Boiler inspection support',val:25000,st:0}
+];
+const inventory=[
+ {sku:'BT-A192-51',name:'Boiler tube 51 mm × 3 m, ASTM A192',cat:'Boiler tubes',unit:'pcs',stock:14,min:20,price:4200},
+ {sku:'SV-2-15',name:'Safety valve 2", set 15 bar',cat:'Valves',unit:'pcs',stock:6,min:4,price:18500},
+ {sku:'PG-16-100',name:'Pressure gauge 0–16 bar, 100 mm',cat:'Gauges',unit:'pcs',stock:22,min:10,price:1450},
+ {sku:'GK-MH-01',name:'Manhole gasket, graphite',cat:'Gaskets',unit:'pcs',stock:9,min:12,price:950},
+ {sku:'BN-NZ-60',name:'Burner nozzle 60°',cat:'Burner parts',unit:'pcs',stock:30,min:15,price:780},
+ {sku:'BN-PC-QRA',name:'Flame sensor / photocell',cat:'Burner parts',unit:'pcs',stock:3,min:5,price:6200},
+ {sku:'CH-OS-25',name:'Oxygen scavenger, 25 kg',cat:'Chemicals',unit:'can',stock:18,min:10,price:5600},
+ {sku:'CH-SI-25',name:'Boiler scale inhibitor, 25 kg',cat:'Chemicals',unit:'can',stock:7,min:10,price:6400},
+ {sku:'CH-DS-30',name:'Descaling chemical, 30 kg',cat:'Chemicals',unit:'can',stock:25,min:8,price:7800},
+ {sku:'RO-8040',name:'RO membrane 8040',cat:'Water treatment',unit:'pcs',stock:4,min:4,price:46000},
+ {sku:'RO-CF-20',name:'Cartridge filter 20", 5 micron',cat:'Water treatment',unit:'pcs',stock:120,min:50,price:240},
+ {sku:'WT-RS-25',name:'Softener resin, 25 L',cat:'Water treatment',unit:'bag',stock:11,min:6,price:5200},
+ {sku:'CT-BIO-25',name:'Cooling tower biocide, 25 kg',cat:'Chemicals',unit:'can',stock:5,min:6,price:7200}
+];
+const services=[
+ {sku:'SV-SURV',name:'Site survey & water analysis',unit:'job',price:5000},
+ {sku:'SV-DESC',name:'Boiler descaling service (chemical), per boiler',unit:'job',price:65000},
+ {sku:'SV-DOSE',name:'Regular dosing programme, monthly',unit:'month',price:18000},
+ {sku:'SV-INSP',name:'Inspection support service',unit:'job',price:15000},
+ {sku:'SV-TUBE',name:'Tube replacement labour, per tube',unit:'tube',price:2200},
+ {sku:'SV-COMM',name:'Commissioning & operator training',unit:'job',price:35000}
+];
+let quotations=[
+ {no:'AHE-Q-26-0139',c:'C-102',amt:149500,st:'Pending',d:-3},
+ {no:'AHE-Q-26-0140',c:'C-104',amt:66700,st:'Pending',d:-2},
+ {no:'AHE-Q-26-0138',c:'C-103',amt:454250,st:'Approved',d:-9},
+ {no:'AHE-Q-26-0136',c:'C-106',amt:110400,st:'Approved',d:-21},
+ {no:'AHE-Q-26-0135',c:'C-105',amt:38000,st:'Rejected',d:-25}
+];
+const invoices=[
+ {no:'AHE-INV-26-0311',c:'C-103',amt:454250,paid:227125,due:12},
+ {no:'AHE-INV-26-0305',c:'C-106',amt:110400,paid:0,due:5},
+ {no:'AHE-INV-26-0298',c:'C-101',amt:74750,paid:74750,due:-20},
+ {no:'AHE-INV-26-0290',c:'C-101',amt:20700,paid:0,due:-6}
+];
+const schedule=[
+ {t:'09:30',w:'Descaling, BLR-0034',c:'C-103',who:'Engr. Sabbir + 3 technicians'},
+ {t:'11:00',w:'Monthly dosing check, BLR-0012',c:'C-101',who:'Technician Jamal'},
+ {t:'15:00',w:'Site survey, RO plant',c:'C-102',who:'Engr. Sabbir'}
+];
+const campaigns=[
+ {n:'Boiler descaling, Facebook lead form',ch:'Facebook',spend:12000,leads:38,q:14,quo:6,won:2,rev:210000},
+ {n:'Boiler service Chattogram, search',ch:'Google',spend:9000,leads:17,q:9,quo:4,won:2,rev:185000},
+ {n:'Factory engineers, sponsored posts',ch:'LinkedIn',spend:6500,leads:6,q:4,quo:2,won:1,rev:216000},
+ {n:'Hoque fire safety awareness video',ch:'Facebook',spend:5000,leads:21,q:5,quo:1,won:0,rev:0}
+];
+const monthly=[[1.42,0.98],[1.65,1.07],[1.31,0.96],[1.88,1.22],[2.10,1.31],[2.36,1.44]]; // lakh BDT sales, expense
+
+/* ---------- state ---------- */
+const S={view:'dashboard',role:'md',sel:null,sent:new Set(),fresh:new Set(),lines:[{sku:'SV-SURV',qty:1,price:5000},{sku:'SV-DESC',qty:1,price:65000},{sku:'CH-DS-30',qty:3,price:7800}],qc:'C-101',disc:5,vat:15,trans:2500,nextQ:141,nextEnq:120,invCat:'All',invQ:''};
+
+const nav=[
+ {id:'dashboard',l:'Dashboard',r:['md','sales','tech','store']},
+ {id:'crm',l:'Leads & CRM',r:['md','sales']},
+ {id:'boilers',l:'Boiler register',r:['md','sales','tech']},
+ {id:'reminders',l:'Reminders',r:['md','sales','tech']},
+ {id:'quotes',l:'Quotations',r:['md','sales']},
+ {id:'inventory',l:'Inventory',r:['md','store','tech']},
+ {id:'reports',l:'Service reports',r:['md','tech']},
+ {id:'marketing',l:'Marketing',r:['md','sales']},
+ {id:'roadmap',l:'Roadmap',r:['md'],tag:'Phase 2–3'},
+ {id:'portal',l:'My boilers',r:['customer']}
+];
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+let toastT;
+function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,3200)}
+function chipDays(n){const c=n<=7?'bad':n<=30?'warn':'ok';return `<span class="chip ${c}">${n===0?'Today':n===1?'Tomorrow':'In '+n+' days'}</span>`}
+function events(){
+  const ev=[];
+  boilers.forEach(b=>{
+    ev.push({k:'Descaling due',date:addDays(b.next),b,id:'d-'+b.id});
+    ev.push({k:'Inspection / certificate renewal',date:addDays(b.insp),b,id:'i-'+b.id});
+  });
+  invoices.filter(i=>i.paid<i.amt).forEach(i=>ev.push({k:'Payment due '+tk(i.amt-i.paid),date:addDays(Math.max(i.due,0)),inv:i,id:'p-'+i.no,overdue:i.due<0}));
+  return ev.filter(e=>{const n=daysTo(e.date);return n>=0&&n<=90}).sort((a,b)=>a.date-b.date);
+}
+function evChip(e){return e.overdue?'<span class="chip bad">Overdue</span>':chipDays(daysTo(e.date))}
+function custOf(e){return cust(e.b?e.b.c:e.inv.c)}
+function lineInfo(sku){return services.find(s=>s.sku===sku)||inventory.find(s=>s.sku===sku)}
+function totals(){
+  const sub=S.lines.reduce((a,l)=>a+l.qty*l.price,0);const disc=sub*S.disc/100;const base=sub-disc;const vat=base*S.vat/100;
+  return {sub,disc,vat,total:base+vat+(+S.trans||0)};
+}
+
+/* ---------- views ---------- */
+const V={};
+V.dashboard=()=>{
+  const ev=events();const openLeads=leads.filter(l=>l.st<4).length;
+  const pend=quotations.filter(q=>q.st==='Pending').length;
+  const dues=invoices.reduce((a,i)=>a+(i.amt-i.paid),0);
+  const low=inventory.filter(i=>i.stock<i.min).length;
+  const mNames=[...Array(6)].map((_,i)=>{const d=new Date(today);d.setMonth(d.getMonth()-6+i);return d.toLocaleDateString('en-GB',{month:'short'})});
+  const mx=Math.max(...monthly.flat());
+  const pipe=stages.map((s,i)=>leads.filter(l=>l.st===i).length);const pmx=Math.max(...pipe,1);
+  return `<div class="mhead"><div><h1>Overview</h1><p>${today.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p></div><span class="sample">Sample data for demonstration</span></div>
+  <div class="kpis">
+   <div class="kpi"><span>Jobs today</span><b>${schedule.length}</b></div>
+   <div class="kpi"><span>Open leads</span><b>${openLeads}</b></div>
+   <div class="kpi"><span>Quotations awaiting reply</span><b>${pend}</b></div>
+   <div class="kpi alert"><span>Receivable from customers</span><b>${tk(dues)}</b></div>
+   <div class="kpi alert"><span>Items below minimum stock</span><b>${low}</b></div>
+  </div>
+  <div class="grid2"><div>
+   <div class="panel"><h2>Due in the next 30 days <button class="link" data-go="reminders">All reminders</button></h2><ul class="list">
+   ${ev.filter(e=>daysTo(e.date)<=30).slice(0,6).map(e=>`<li><div class="t"><b>${esc(e.k)}${e.b?', '+e.b.id:''}</b><span>${esc(custOf(e).name)}</span></div>${evChip(e)}</li>`).join('')}
+   </ul></div>
+   <div class="panel"><h2>Sales vs expense <small>last 6 months, lakh ৳</small></h2>
+    <div class="bars">${monthly.map((m,i)=>`<div class="m"><div class="pair"><i class="s" style="height:${m[0]/mx*100}%" title="Sales ${m[0]} lakh"></i><i class="e" style="height:${m[1]/mx*100}%" title="Expense ${m[1]} lakh"></i></div><small>${mNames[i]}</small></div>`).join('')}</div>
+    <div class="legend"><span><i style="background:var(--navy-3)"></i>Sales</span><span><i style="background:var(--orange)"></i>Expense</span></div>
+   </div>
+  </div><div>
+   <div class="panel"><h2>Today's schedule</h2><ul class="list">${schedule.map(s=>`<li><span class="time">${s.t}</span><div class="t"><b>${esc(s.w)}</b><span>${esc(cust(s.c).name)}<br>${esc(s.who)}</span></div></li>`).join('')}</ul></div>
+   <div class="panel"><h2>Sales pipeline <button class="link" data-go="crm">Open board</button></h2>${stages.map((s,i)=>`<div class="hbar"><span>${s}</span><div><i style="width:${pipe[i]/pmx*100}%"></i></div><b>${pipe[i]}</b></div>`).join('')}</div>
+  </div></div>`;
+};
+V.crm=()=>`<div class="mhead"><div><h1>Leads &amp; CRM</h1><p>Every enquiry from website, Facebook, phone and field visits in one pipeline.</p></div><span class="sample">Sample data</span></div>
+ <div class="board">${stages.map((s,i)=>{const L=leads.filter(l=>l.st===i);return `<div class="col"><h3>${s}<span class="pill">${L.length}</span></h3>${L.map(l=>`<div class="card${S.fresh.has(l.id)?' fresh':''}"><b>${esc(l.co)}</b><div class="meta">${esc(l.need)}<br>${esc(l.who)} &nbsp; ${l.val?tk(l.val):'Value pending'}</div><div class="foot"><span class="chip src">${esc(l.src)}</span>${i<5?`<button class="link" data-act="adv" data-id="${l.id}">Move to ${stages[i+1]}</button>`:'<span class="chip ok">Won</span>'}</div></div>`).join('')||'<p style="color:var(--muted);font-size:14px;margin:4px">No leads here.</p>'}</div>`}).join('')}</div>`;
+V.boilers=()=>{
+  const b=S.sel&&boilers.find(x=>x.id===S.sel);
+  return `<div class="mhead"><div><h1>Boiler register</h1><p>One digital profile per boiler. Tap a row to see its history.</p></div><span class="sample">Sample data</span></div>
+  <div class="panel tbl"><table><thead><tr><th>Boiler ID</th><th>Customer</th><th>Type &amp; capacity</th><th>Pressure</th><th>Govt. reg. no.</th><th>Next descaling</th><th>Inspection expiry</th></tr></thead><tbody>
+  ${boilers.map(x=>`<tr class="click${S.sel===x.id?' sel':''}" data-act="selB" data-id="${x.id}" tabindex="0"><td><b>${x.id}</b></td><td>${esc(cust(x.c).name)}</td><td>${x.type}, ${x.cap}</td><td>${x.p}</td><td>${x.reg}</td><td>${fmt(addDays(x.next))}<br>${chipDays(x.next)}</td><td>${fmt(addDays(x.insp))}<br>${chipDays(x.insp)}</td></tr>`).join('')}
+  </tbody></table></div>
+  ${b?`<div class="grid2"><div class="panel"><h2>${b.id} <small>${esc(cust(b.c).name)}</small></h2><div class="tbl"><table><tbody>
+   <tr><th>Type</th><td>${b.type}</td></tr><tr><th>Capacity / pressure</th><td>${b.cap}, ${b.p}</td></tr><tr><th>Fuel</th><td>${b.fuel}</td></tr><tr><th>Registration</th><td>${b.reg}</td></tr><tr><th>Last descaling</th><td>${fmt(addDays(b.last))}</td></tr><tr><th>Contact</th><td>${esc(cust(b.c).contact)}, ${cust(b.c).phone}</td></tr></tbody></table></div></div>
+   <div class="panel"><h2>Service history</h2><ul class="list">
+    <li><div class="t"><b>Descaling completed</b><span>${fmt(addDays(b.last))}, report AHE-DR-${b.id.slice(4)}-01</span></div><span class="chip ok">Done</span></li>
+    <li><div class="t"><b>Safety valve tested</b><span>${fmt(addDays(b.last+40))}</span></div><span class="chip ok">Done</span></li>
+    <li><div class="t"><b>Monthly dosing check</b><span>${fmt(addDays(-12))}, TDS within range</span></div><span class="chip ok">Done</span></li>
+    <li><div class="t"><b>Next descaling</b><span>${fmt(addDays(b.next))}</span></div>${chipDays(b.next)}</li></ul></div></div>`:''}`;
+};
+V.reminders=()=>{
+  const ev=events();
+  return `<div class="mhead"><div><h1>Reminders</h1><p>Automatic alerts 90, 60, 30, 15, 7 and 1 day before each due date, by app, email, WhatsApp and SMS.</p></div><span class="sample">Sample data</span></div>
+  <div class="panel">${ev.map(e=>{const n=daysTo(e.date);const c=custOf(e);const sent=S.sent.has(e.id);return `<div class="rem"><div class="d">${e.overdue?'<span style="color:var(--bad)">!</span><small>Overdue</small>':n+'<small>'+(n===1?'day':'days')+' left</small>'}</div>
+   <div><b>${esc(e.k)}${e.b?', '+e.b.id:''}</b><div style="color:var(--muted);font-size:14px">${esc(c.name)}, ${esc(c.contact)} (${c.phone}), due ${fmt(e.date)}</div>
+   <div class="dots" style="margin-top:6px">Alerts: ${[90,60,30,15,7,1].map(t=>`<i class="${n<=t?'on':''}" title="${t} days">${t}</i>`).join('')}</div></div>
+   <div class="acts">${sent?'<span class="chip ok">WhatsApp sent</span>':`<button class="btn sm primary" data-act="send" data-id="${e.id}" data-name="${esc(c.contact)}">Send WhatsApp reminder</button>`}<button class="btn sm ghost" data-act="assign" data-id="${e.id}">Assign</button></div></div>`}).join('')}</div>`;
+};
+V.quotes=()=>{
+  const t=totals();
+  const opts=`<optgroup label="Services">${services.map(s=>`<option value="${s.sku}">${esc(s.name)}</option>`).join('')}</optgroup><optgroup label="Products">${inventory.map(s=>`<option value="${s.sku}">${esc(s.name)}</option>`).join('')}</optgroup>`;
+  return `<div class="mhead"><div><h1>Quotations</h1><p>Build, preview and send a quotation in minutes. Approved quotations become work orders and invoices.</p></div><span class="sample">Sample data</span></div>
+  <div class="qb"><div class="panel">
+   <h2>New quotation <small>AHE-Q-26-0${S.nextQ}</small></h2>
+   <div class="rowf"><label>Customer<select data-f="qc">${customers.map(c=>`<option value="${c.id}"${c.id===S.qc?' selected':''}>${esc(c.name)}</option>`).join('')}</select></label></div>
+   <div class="rowf"><label style="flex:1;min-width:220px">Add service or product<select id="addSku">${opts}</select></label><button class="btn sm dark" data-act="addLine">Add line</button></div>
+   <div class="tbl"><table><thead><tr><th>Item</th><th class="num">Qty</th><th class="num">Unit price</th><th class="num">Amount</th><th></th></tr></thead><tbody>
+   ${S.lines.map((l,i)=>{const it=lineInfo(l.sku);return `<tr><td>${esc(it.name)}<br><small style="color:var(--muted)">${l.sku}, per ${it.unit}</small></td><td class="num"><input class="qty" type="number" min="1" value="${l.qty}" data-line="${i}" data-k="qty" aria-label="Quantity"></td><td class="num"><input type="number" min="0" value="${l.price}" data-line="${i}" data-k="price" aria-label="Unit price"></td><td class="num">${tk(l.qty*l.price)}</td><td><button class="x" data-act="rm" data-i="${i}" aria-label="Remove line">×</button></td></tr>`}).join('')||'<tr><td colspan="5" style="color:var(--muted)">Add a service or product to start.</td></tr>'}
+   </tbody></table></div></div>
+   <div class="panel tot" id="totBox">${totHTML(t)}</div></div>
+  <div class="panel tbl"><h2>Recent quotations</h2><table><thead><tr><th>Number</th><th>Customer</th><th>Date</th><th class="num">Amount</th><th>Status</th></tr></thead><tbody>
+   ${quotations.map(q=>`<tr><td><b>${q.no}</b></td><td>${esc(cust(q.c).name)}</td><td>${fmt(addDays(q.d))}</td><td class="num">${tk(q.amt)}</td><td><span class="chip ${q.st==='Approved'?'ok':q.st==='Rejected'?'bad':'warn'}">${q.st}</span></td></tr>`).join('')}
+  </tbody></table></div>`;
+};
+function totHTML(t){return `<h2>Summary</h2>
+  <div><span>Subtotal</span><b>${tk(t.sub)}</b></div>
+  <div><span>Discount <input type="number" min="0" max="100" value="${S.disc}" data-f="disc" aria-label="Discount percent"> %</span><b>−${tk(t.disc)}</b></div>
+  <div><span>VAT <input type="number" min="0" max="100" value="${S.vat}" data-f="vat" aria-label="VAT percent"> %</span><b>${tk(t.vat)}</b></div>
+  <div><span>Transport ৳ <input type="number" min="0" value="${S.trans}" data-f="trans" aria-label="Transport charge" style="width:80px"></span><b>${tk(+S.trans||0)}</b></div>
+  <div class="g"><span>Total</span><span>${tk(t.total)}</span></div>
+  <div style="border:0;flex-direction:column;gap:8px;padding-top:12px"><button class="btn primary" data-act="preview">Preview quotation</button><button class="btn ghost" data-act="saveQ">Save &amp; mark as sent</button></div>`}
+V.inventory=()=>{
+  const cats=['All',...new Set(inventory.map(i=>i.cat))];
+  const rows=inventory.filter(i=>(S.invCat==='All'||i.cat===S.invCat)&&(i.name+i.sku).toLowerCase().includes(S.invQ.toLowerCase()));
+  return `<div class="mhead"><div><h1>Inventory</h1><p>Boiler parts, chemicals and water-treatment stock with minimum-level alerts.</p></div><span class="sample">Sample data</span></div>
+  <div class="panel"><div class="qb" style="grid-template-columns:auto 1fr;margin-bottom:12px"><label style="font-size:13.5px;font-weight:600;color:var(--muted);display:flex;flex-direction:column;gap:4px">Category<select data-f="invCat" style="border:1.5px solid var(--line);background:var(--bg);border-radius:6px;padding:8px 10px">${cats.map(c=>`<option${c===S.invCat?' selected':''}>${c}</option>`).join('')}</select></label>
+  <label style="font-size:13.5px;font-weight:600;color:var(--muted);display:flex;flex-direction:column;gap:4px">Search<input data-f="invQ" value="${esc(S.invQ)}" placeholder="Item name or SKU" style="border:1.5px solid var(--line);background:var(--bg);border-radius:6px;padding:8px 10px"></label></div>
+  <div class="tbl" id="invTbl">${invTable(rows)}</div></div>`;
+};
+function invTable(rows){return `<table><thead><tr><th>SKU</th><th>Item</th><th>Category</th><th class="num">In stock</th><th class="num">Minimum</th><th class="num">Unit price</th><th>Status</th></tr></thead><tbody>
+ ${rows.map(i=>{const st=i.stock<i.min?['bad','Reorder now']:i.stock<i.min*1.5?['warn','Running low']:['ok','In stock'];return `<tr><td>${i.sku}</td><td>${esc(i.name)}</td><td>${i.cat}</td><td class="num">${i.stock} ${i.unit}</td><td class="num">${i.min}</td><td class="num">${tk(i.price)}</td><td><span class="chip ${st[0]}">${st[1]}</span>${st[0]==='bad'?` <button class="link" data-act="pr" data-id="${i.sku}">Raise purchase request</button>`:''}</td></tr>`}).join('')||'<tr><td colspan="7" style="color:var(--muted)">No items match. Clear the search or pick another category.</td></tr>'}
+ </tbody></table>`}
+V.reports=()=>{const b=boilers[3],c=cust(b.c);return `<div class="mhead"><div><h1>Service reports</h1><p>Engineers fill the report on a phone at site; the customer receives a branded PDF.</p></div><span class="sample">Sample report</span></div>
+ <div class="doc"><div class="dh"><div><h2>Boiler descaling report</h2><div>Report no. AHE-DR-0034-02</div></div><div style="text-align:right"><b>M/S Al Hasan Engineering Works</b><br>Islam Monjil, 2196 PC Road, Halishahar, Chattogram<br>01735-484726</div></div>
+ <div class="tbl"><table><tbody><tr><th>Customer</th><td>${esc(c.name)}, ${esc(c.area)}</td><th>Boiler</th><td>${b.id}, ${b.type}, ${b.cap}, ${b.p}</td></tr><tr><th>Date</th><td>${fmt(addDays(-1))}</td><th>Engineer</th><td>Engr. Sabbir (sample)</td></tr></tbody></table></div>
+ <h3 style="font:600 18px var(--display);margin:18px 0 6px">Readings</h3>
+ <div class="tbl"><table><thead><tr><th>Parameter</th><th class="num">Before</th><th class="num">After</th></tr></thead><tbody>
+ <tr><td>Scale thickness, fire side tubes (mm)</td><td class="num">1.8</td><td class="num">0.2</td></tr><tr><td>Circulation pH (end of cleaning)</td><td class="num">2.1</td><td class="num">7.4</td></tr><tr><td>Flue gas temperature at full load (°C)</td><td class="num">268</td><td class="num">231</td></tr><tr><td>Descaling chemical used (kg)</td><td class="num" colspan="2">90</td></tr></tbody></table></div>
+ <h3 style="font:600 18px var(--display);margin:18px 0 6px">Safety checklist</h3>
+ <p>✓ Boiler isolated and cooled &nbsp; ✓ PPE worn by all workers &nbsp; ✓ SDS available at site &nbsp; ✓ Neutralised before drain &nbsp; ✓ Hydro test after cleaning</p>
+ <div class="grid2" style="grid-template-columns:1fr 1fr;margin-top:12px"><div class="ph">Before photo<br>(uploaded from engineer's phone)</div><div class="ph">After photo<br>(uploaded from engineer's phone)</div></div>
+ <p style="margin-top:14px"><b>Recommendation:</b> keep TDS below the programme limit with daily blowdown; next descaling due ${fmt(addDays(364))}.</p>
+ <div class="sig"><div>Engineer signature</div><div>Customer signature &amp; seal</div></div></div>`};
+V.marketing=()=>{
+  const T=campaigns.reduce((a,c)=>({spend:a.spend+c.spend,leads:a.leads+c.leads,won:a.won+c.won,rev:a.rev+c.rev}),{spend:0,leads:0,won:0,rev:0});
+  const src={};leads.forEach(l=>src[l.src]=(src[l.src]||0)+1);const smx=Math.max(...Object.values(src));
+  return `<div class="mhead"><div><h1>Marketing</h1><p>From ad spend to confirmed sales, so every taka of marketing is accountable.</p></div><span class="sample">Sample data, last 30 days</span></div>
+  <div class="kpis" style="grid-template-columns:repeat(4,1fr)">
+   <div class="kpi"><span>Ad spend</span><b>${tk(T.spend)}</b></div><div class="kpi"><span>Leads</span><b>${T.leads}</b></div>
+   <div class="kpi"><span>Cost per lead</span><b>${tk(T.spend/T.leads)}</b></div><div class="kpi"><span>Revenue from ads</span><b>${tk(T.rev)}</b></div></div>
+  <div class="grid2"><div class="panel tbl"><h2>Campaigns</h2><table><thead><tr><th>Campaign</th><th class="num">Spend</th><th class="num">Leads</th><th class="num">Qualified</th><th class="num">Won</th><th class="num">Return</th></tr></thead><tbody>
+   ${campaigns.map(c=>`<tr><td><b>${esc(c.n)}</b><br><small style="color:var(--muted)">${c.ch}, ${tk(c.spend/c.leads)} per lead</small></td><td class="num">${tk(c.spend)}</td><td class="num">${c.leads}</td><td class="num">${c.q}</td><td class="num">${c.won}</td><td class="num">${c.rev?(c.rev/c.spend).toFixed(1)+'×':'<span class="chip warn">Review</span>'}</td></tr>`).join('')}
+  </tbody></table></div>
+  <div class="panel"><h2>Open leads by source</h2>${Object.entries(src).map(([k,v])=>`<div class="hbar"><span>${k}</span><div><i style="width:${v/smx*100}%"></i></div><b>${v}</b></div>`).join('')}
+  <p style="color:var(--muted);font-size:14px;margin-top:14px">Website enquiries arrive here automatically, tagged with the page and campaign they came from.</p></div></div>`;
+};
+V.roadmap=()=>`<div class="mhead"><div><h1>Build roadmap</h1><p>The full system is delivered in three phases, so the business uses it early and pays for it in stages.</p></div></div>
+ <div class="phase">
+  <div class="panel"><h2>Phase 1 <span class="chip ok">In this demo</span></h2><ul><li>Customer &amp; boiler register</li><li>Automatic reminders</li><li>Quotation, invoice, challan</li><li>Inventory &amp; low-stock alerts</li><li>Website enquiry to CRM</li></ul></div>
+  <div class="panel"><h2>Phase 2 <span class="chip info">Next</span></h2><ul><li>Projects &amp; work orders</li><li>Descaling &amp; inspection reports</li><li>Accounts, cash &amp; bank book</li><li>Purchase &amp; suppliers</li><li>Sales reports</li></ul></div>
+  <div class="panel"><h2>Phase 3 <span class="chip info">Later</span></h2><ul><li>Customer portal</li><li>WhatsApp &amp; SMS automation</li><li>Employee &amp; technician management</li><li>Chemical &amp; efficiency calculators</li><li>Android app</li></ul></div>
+ </div>`;
+V.portal=()=>{const c=cust('C-101');const bs=boilers.filter(b=>b.c===c.id);const iv=invoices.filter(i=>i.c===c.id);
+ return `<div class="mhead"><div><h1>Welcome, ${esc(c.name)}</h1><p>Customer portal: your boilers, documents and service requests in one place.</p></div><span class="sample">Sample customer</span></div>
+ <div class="grid2"><div>
+  <div class="panel tbl"><h2>Your boilers</h2><table><thead><tr><th>Boiler</th><th>Next descaling</th><th>Inspection expiry</th></tr></thead><tbody>${bs.map(b=>`<tr><td><b>${b.id}</b><br><small style="color:var(--muted)">${b.type}, ${b.cap}</small></td><td>${fmt(addDays(b.next))}<br>${chipDays(b.next)}</td><td>${fmt(addDays(b.insp))}<br>${chipDays(b.insp)}</td></tr>`).join('')}</tbody></table></div>
+  <div class="panel tbl"><h2>Invoices</h2><table><tbody>${iv.map(i=>`<tr><td><b>${i.no}</b></td><td class="num">${tk(i.amt)}</td><td>${i.paid>=i.amt?'<span class="chip ok">Paid</span>':'<span class="chip bad">Due '+tk(i.amt-i.paid)+'</span>'}</td></tr>`).join('')}</tbody></table></div>
+ </div><div>
+  <div class="panel"><h2>Documents</h2><ul class="list"><li><div class="t"><b>Descaling report, BLR-0012</b><span>${fmt(addDays(-358))}</span></div><button class="link" data-act="doc">Download PDF</button></li><li><div class="t"><b>Monthly dosing report</b><span>${fmt(addDays(-12))}</span></div><button class="link" data-act="doc">Download PDF</button></li><li><div class="t"><b>Inspection certificate copy</b><span>Valid until ${fmt(addDays(23))}</span></div><button class="link" data-act="doc">Download PDF</button></li></ul></div>
+  <div class="panel"><h2>Request service</h2><div class="qb" style="grid-template-columns:1fr"><label>Boiler<select id="pB">${bs.map(b=>`<option>${b.id}</option>`).join('')}</select></label><label style="margin-top:10px">What do you need?<input id="pMsg" placeholder="e.g. burner not firing on low flame"></label><button class="btn primary" style="margin-top:12px" data-act="portalReq">Send request</button></div></div>
+ </div></div>`};
+
+/* ---------- render ---------- */
+function renderNav(){
+  const items=nav.filter(n=>n.r.includes(S.role));
+  if(!items.some(n=>n.id===S.view))S.view=items[0].id;
+  $('#erpNav').innerHTML=items.map(n=>`<button type="button" data-go="${n.id}"${n.id===S.view?' aria-current="page"':''}><span>${n.l}</span>${n.id==='crm'&&S.fresh.size?`<span class="pill new">${S.fresh.size} new</span>`:n.tag?`<span class="pill">${n.tag}</span>`:''}</button>`).join('');
+}
+function render(){renderNav();$('#erpMain').innerHTML=V[S.view]();}
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+  const tab=e.target.closest('[data-tab]');
+  if(tab){const t=tab.dataset.tab;document.querySelectorAll('.seg [data-tab]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.tab===t));$('#site').hidden=t!=='site';$('#erp').hidden=t!=='erp';if(t==='erp')render();window.scrollTo(0,0);return}
+  const go=e.target.closest('[data-go]');
+  if(go){S.view=go.dataset.go;render();if(window.innerWidth<860)$('#erpMain').scrollIntoView();return}
+  const svc=e.target.closest('[data-svc]');if(svc){$('#svcSel').value=svc.dataset.svc}
+  const a=e.target.closest('[data-act]');if(!a)return;
+  const act=a.dataset.act,id=a.dataset.id;
+  if(act==='adv'){const l=leads.find(x=>x.id===id);l.st++;S.fresh.delete(id);render();toast(`${l.co} moved to ${stages[l.st]}`)}
+  if(act==='selB'){S.sel=S.sel===id?null:id;render()}
+  if(act==='send'){S.sent.add(id);render();toast(`WhatsApp reminder sent to ${a.dataset.name}`)}
+  if(act==='assign'){toast('Assigned to Engr. Sabbir; it now shows on his dashboard')}
+  if(act==='addLine'){const sku=$('#addSku').value;const it=lineInfo(sku);S.lines.push({sku,qty:1,price:it.price});render()}
+  if(act==='rm'){S.lines.splice(+a.dataset.i,1);render()}
+  if(act==='preview'){if(!S.lines.length){toast('Add at least one line to preview');return}openPreview()}
+  if(act==='saveQ'){if(!S.lines.length){toast('Add at least one line before saving');return}const no='AHE-Q-26-0'+S.nextQ++;quotations.unshift({no,c:S.qc,amt:Math.round(totals().total),st:'Pending',d:0});render();toast(`Quotation ${no} saved and marked as sent`)}
+  if(act==='closeModal'){closeModal()}
+  if(act==='pr'){toast(`Purchase request raised for ${id}`)}
+  if(act==='doc'){toast('In the live system this downloads the signed PDF')}
+  if(act==='portalReq'){const m=$('#pMsg').value.trim();if(!m){toast('Describe what you need, then send');$('#pMsg').focus();return}const lid='L-2610-'+S.nextEnq++;leads.unshift({id:lid,co:cust('C-101').name,who:cust('C-101').contact,src:'Portal',need:m,val:0,st:0});S.fresh.add(lid);$('#pMsg').value='';toast(`Request ${lid} sent. Our team will call you.`)}
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&!$('#modal').hidden)closeModal();
+  if((e.key==='Enter'||e.key===' ')&&e.target.matches('tr[data-act="selB"]')){e.preventDefault();e.target.click()}
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.dataset.line!==undefined){const l=S.lines[+t.dataset.line];l[t.dataset.k]=Math.max(0,+t.value||0);const row=t.closest('tr');row.querySelector('td:nth-child(4)').textContent=tk(l.qty*l.price);$('#totBox').innerHTML=totHTML(totals());return}
+  const f=t.dataset.f;if(!f)return;
+  if(f==='invQ'){S.invQ=t.value;const rows=inventory.filter(i=>(S.invCat==='All'||i.cat===S.invCat)&&(i.name+i.sku).toLowerCase().includes(S.invQ.toLowerCase()));$('#invTbl').innerHTML=invTable(rows);return}
+  if(['disc','vat','trans'].includes(f)){S[f]=Math.max(0,+t.value||0);const box=$('#totBox');const pos=t.selectionStart;box.innerHTML=totHTML(totals());const n=box.querySelector(`[data-f="${f}"]`);n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}
+});
+document.addEventListener('change',e=>{
+  const f=e.target.dataset.f;
+  if(f==='qc'){S.qc=e.target.value}
+  if(f==='invCat'){S.invCat=e.target.value;render()}
+});
+$('#role').addEventListener('change',e=>{S.role=e.target.value;S.sel=null;render();toast('Menu changed to match this role\'s permissions')});
+
+function openPreview(){
+  const c=cust(S.qc),t=totals();
+  $('#modalBody').innerHTML=`<div class="doc"><div class="dh"><div><h2>Quotation</h2><div>No. AHE-Q-26-0${S.nextQ}<br>Date ${fmt(today)}<br>Valid until ${fmt(addDays(15))}</div></div><div style="text-align:right"><b>M/S Al Hasan Engineering Works</b><br>Islam Monjil, 2196 PC Road, Halishahar, Chattogram-4223<br>01735-484726, info@alhasanengr.com</div></div>
+  <p><b>To:</b> ${esc(c.name)}<br>${esc(c.area)}<br>Attn: ${esc(c.contact)}</p>
+  <div class="tbl"><table><thead><tr><th>#</th><th>Description</th><th class="num">Qty</th><th class="num">Rate</th><th class="num">Amount</th></tr></thead><tbody>
+  ${S.lines.map((l,i)=>{const it=lineInfo(l.sku);return `<tr><td>${i+1}</td><td>${esc(it.name)}</td><td class="num">${l.qty} ${it.unit}</td><td class="num">${tk(l.price)}</td><td class="num">${tk(l.qty*l.price)}</td></tr>`}).join('')}
+  <tr><td colspan="4" class="num">Subtotal</td><td class="num">${tk(t.sub)}</td></tr><tr><td colspan="4" class="num">Discount ${S.disc}%</td><td class="num">−${tk(t.disc)}</td></tr><tr><td colspan="4" class="num">VAT ${S.vat}%</td><td class="num">${tk(t.vat)}</td></tr><tr><td colspan="4" class="num">Transport</td><td class="num">${tk(+S.trans||0)}</td></tr><tr><td colspan="4" class="num"><b>Total</b></td><td class="num"><b>${tk(t.total)}</b></td></tr></tbody></table></div>
+  <p style="margin-top:16px"><b>Terms:</b> 50% advance with work order, balance on completion. Work starts within 7 working days of advance. Chemicals supplied with TDS and SDS. Prices valid for 15 days.</p>
+  <div class="sig"><div>For M/S Al Hasan Engineering Works</div><div>Customer acceptance</div></div></div>`;
+  $('#modal').hidden=false;$('#modal .btn').focus();
+}
+function closeModal(){$('#modal').hidden=true}
+
+/* ---------- website quote form ---------- */
+$('#qf').addEventListener('submit',e=>{
+  e.preventDefault();const f=e.target;let ok=true;
+  f.querySelectorAll('.f').forEach(w=>{const el=w.querySelector('input,select,textarea');const er=w.querySelector('.err');er.textContent='';
+    if(el.required&&!el.value.trim()){er.textContent='Fill in this field to send your enquiry.';ok=false}
+    else if(el.name==='mobile'&&el.value.replace(/\D/g,'').length<11){er.textContent='Enter an 11-digit mobile number, e.g. 01711-123456.';ok=false}});
+  if(!f.consent.checked){toast('Tick the consent box to send your enquiry');ok=false}
+  if(!ok)return;
+  const id='L-2610-'+S.nextEnq++;
+  leads.unshift({id,co:f.company.value.trim(),who:f.name.value.trim(),src:'Website',need:f.svc.value,val:0,st:0});S.fresh.add(id);
+  const ok2=$('#qok');ok2.hidden=false;ok2.innerHTML=`Enquiry <b>${id}</b> received. An engineer will call ${esc(f.mobile.value)} soon. <button type="button" class="link" data-tab="erp" style="color:inherit;text-decoration:underline">See it arrive in the ERP</button>`;
+  f.querySelectorAll('input:not([type=checkbox]),textarea').forEach(i=>i.value='');f.svc.value='';f.consent.checked=false;
+});
+if(window.innerWidth>900)$('#locdetails').open=true;
+})();
+</script>
+</body>
+</html>
